@@ -105,9 +105,6 @@ void osd_clear(){
   }
 }
 
-int char_map(int ascii){ //maps ascii to 0-48 with different order
-
-}
 
 int char_size(int sz){ //Size 0-3, 2H, 4H, 6H, 8H
  osd_write(62,sz); //not a good way, does reset BLK&BLKB to 0!
@@ -115,7 +112,25 @@ int char_size(int sz){ //Size 0-3, 2H, 4H, 6H, 8H
 
 
 int row(int ptr){return ptr/12;}
-int col(int ptr){return ptr & 12;}  
+int col(int ptr){return ptr % 12;}  
 int ptr(int row, int col){return col + row * 12;}
+
+char remap(const char c) {
+    if (c >= 48 && c < 58) {
+    return c - 48 + 32;
+  } else if (c >= 65 && c < 78) {
+    return c - 65;
+  } else if (c >= 78 && c < 91) {
+    return c - 78 + 16;
+  } else if (c >= 97 && c < 110) {
+    return c - 97;
+  } else if (c >= 110 && c < 123) {
+    return c - 110 + 16;
+  } else if (c == 32) {
+    return 15;
+  } else {
+    return 29;
+  }
+}
 
 
